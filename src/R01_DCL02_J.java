@@ -1,7 +1,4 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /******************************************************************************
@@ -14,20 +11,28 @@ import java.util.List;
 public class R01_DCL02_J {
 
     public static void main(String[] args) {
-        ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(new Integer[] {13, 14, 15}));
-        ArrayList<Integer> list2  = new ArrayList<>();
-
+        List<Integer> list = Arrays.asList(new Integer[] {13, 14, 15});
         boolean first = true;
 
+        /*
+         * Rule 01. Declarations and Initializations (DCL)
+         * Corrected code per:
+         * https://wiki.sei.cmu.edu/confluence/display/java/DCL02-J.+Do+not+modify+the+collection%27s+elements+during+an+enhanced+for+statement
+         *
+         * Rule 01-DCL02
+         */
+
+        //NOTE: BECAUSE THIS IS A CODE CLARITY/STYLE CHANGE, THERE IS NO VISIBLE DIFFERENCE IN THE EXAMPLE
         System.out.println("Processing list...");
-        for (Integer i: list) {
+        for (final Integer i: list) {
+            Integer item = i;
             if (first) {
                 first = false;
-                i = new Integer(99);
+                item = new Integer(99);
             }
-            System.out.println(" New item: " + i);
-            // Process i
-            System.out.println("  index of item: " + list.indexOf(i));
+            System.out.println(" New item: " + item);
+            // Process item
+            System.out.println("  index of item: " + list.indexOf(item));
         }
 
         System.out.println("Modified list?");

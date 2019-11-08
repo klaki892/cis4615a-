@@ -8,14 +8,22 @@ import java.math.BigInteger;
  *
  ******************************************************************************/
 public class R04_STR03_J {
+
+    /*
+     * Rule 04. Characters and Strings(STR)
+     * Corrected code per:
+     * https://wiki.sei.cmu.edu/confluence/display/java/STR03-J.+Do+not+encode+noncharacter+data+as+a+string
+     *
+     * Rule 04-STR03
+     */
     public static void main(String[] args) {
 
         BigInteger x = new BigInteger("530500452766");
         System.out.println("original value: " + x.toString());
-        byte[] byteArray = x.toByteArray();
-        String s = new String(byteArray);
-        byteArray = s.getBytes();
-        x = new BigInteger(byteArray);
+        String s = x.toString();  // Valid character data
+        byte[] byteArray = s.getBytes();
+        String ns = new String(byteArray);
+        x = new BigInteger(ns);
         System.out.println("new value: " + x.toString());
     }
 }

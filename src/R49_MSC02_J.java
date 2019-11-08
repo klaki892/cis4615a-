@@ -1,3 +1,4 @@
+import java.security.SecureRandom;
 import java.util.Random;
 
 /******************************************************************************
@@ -10,12 +11,19 @@ import java.util.Random;
 
 public class R49_MSC02_J {
 
+    /*
+     * Rule 49. Miscellaneous(MSC)
+     * Corrected code per:
+     * https://wiki.sei.cmu.edu/confluence/display/java/MSC02-J.+Generate+strong+random+numbers
+     *
+     *Rule 49-MSC02
+     */
     public static void main(String[] args){
 
         System.out.println("Your super secret numeric passcode: ");
 
-        Random number = new Random(123L);
-//...
+        SecureRandom number = new SecureRandom();
+        // Generate 20 integers 0..20
         for (int i = 0; i < 20; i++) {
             // Generate another random integer in the range [0, 20]
             int n = number.nextInt(21);

@@ -21,7 +21,15 @@ public class R03_NUM03_J {
         System.out.println(Integer.MAX_VALUE + "(unsigned) + " + 1 + "(unsigned) = " + getInteger(dis) + "(unsigned)");
     }
 
-    public static int getInteger(DataInputStream is) throws IOException {
-        return is.readInt();
+    /*
+     * Rule 03. NUmeric Types and Operations(NUM)
+     * Corrected code per:
+     * https://wiki.sei.cmu.edu/confluence/display/java/NUM03-J.+Use+integer+types+that+can+fully+represent+the+possible+range+of++unsigned+data
+     *
+     * Rule 03-NUM03
+     */
+
+    public static long getInteger(DataInputStream is) throws IOException {
+        return is.readInt() & 0xFFFFFFFFL; // Mask with 32 one-bits
     }
 }
