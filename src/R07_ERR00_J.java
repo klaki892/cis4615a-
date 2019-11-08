@@ -1,5 +1,5 @@
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /******************************************************************************
@@ -11,21 +11,39 @@ import java.util.Scanner;
  ******************************************************************************/
 public class R07_ERR00_J {
 
+    /*
+     * Rule 07. Exceptional Behavior (ERR)
+     * Corrected code per:
+     * https://wiki.sei.cmu.edu/confluence/display/java/ERR00-J.+Do+not+suppress+or+ignore+checked+exceptions
+     *
+     *Rule 0-ERR00
+     */
+
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
 
         String filename = "arandomfile";
         System.out.println("reading first line of " + filename+ ":");
-        boolean success = true;
-        try {
-            Scanner s = new Scanner(new File(filename));
+         boolean validFlag = false;
 
-            System.out.println("Next line: " + s.nextLine());
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
+        do {
+            try (Scanner s = new Scanner(new File(filename))) {
+                // If requested file does not exist, throws FileNotFoundException
+                // If requested file exists, sets validFlag to true
 
-        if (success)
+                System.out.println("Next line: " + s.nextLine());
+
+                validFlag = true;
+            } catch (FileNotFoundException e) {
+                // Ask the user for a different file name
+                System.out.println("couldnt find " + filename + ", supply a new file: ");
+                filename = in.nextLine();
+            }
+        } while (validFlag != true);
+
+
             System.out.println("Successfully read file!" );
+            in.close();
     }
 
 }

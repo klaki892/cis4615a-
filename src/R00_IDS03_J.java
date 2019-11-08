@@ -1,4 +1,5 @@
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /******************************************************************************
  *  Compilation:  javac R00_IDS03_J.java
@@ -11,6 +12,14 @@ public class R00_IDS03_J {
 
     private static final Logger logger = Logger.getLogger(R00_IDS03_J.class.getName());
 
+
+    /*
+    * Rule 00. INput Validation and Data Sanitization (IDS)
+    * Corrected code per:
+    * https://wiki.sei.cmu.edu/confluence/display/java/IDS03-J.+Do+not+log+unsanitized+user+input
+    *
+    *Rule 00-IDS03
+    */
     public static void main(String[] args){
 
         boolean loginSuccessful = true;
@@ -21,11 +30,15 @@ public class R00_IDS03_J {
 
         //test login for sanization
         if (loginSuccessful) {
-            logger.severe("User login succeeded for: " + username);
+            logger.severe("User login succeeded for: " + sanitizeUser(username));
         } else {
-            logger.severe("User login failed for: " + username);
+            logger.severe("User login failed for: " + sanitizeUser(username));
         }
 
     }
+    public static String sanitizeUser(String username) {
+        return Pattern.matches("[A-Za-z0-9_]+", username) ? username : "unauthorized user";
+    }
+
 
 }
